@@ -1,0 +1,63 @@
+{%extends "layout.html"%}
+
+{%block content%}
+<style>
+    table, th, td {
+      border: 1px solid black;
+    }
+    </style>
+
+<div id="uploaded">
+
+    {%if grafico%}
+    
+        <div>
+            <img src= "/static/img/graph.png" alt="graph">
+            <table>
+                <tr>
+                    <th> Centro Distribucion </th>
+                    <th> Punto de Venta </th>
+                    <th> Distancia Centro-Punto </th>
+                </tr>
+                {% for x,y in dict.items() %}
+                {% for a,b in y.items() %}
+                <tr>
+                    <td>{{ x }}</td>
+                    <td>{{ a }}</td>
+                    <td>{{ b }}</td>
+                </tr>
+                {% endfor %}
+                {% endfor %}
+
+            </table>
+        </div>
+
+        <div>
+        <form action="/upload2" method="POST">
+            <table>
+                <tr>
+                    <th> Centro Distribucion </th>
+                    <th> Camiones asignados </th>
+                    <th> Carga camiones </th>
+                </tr>
+                {% for x,y in dict.items() %}
+                <tr>
+                    <td>{{ x }}</td>
+                    <td><input type="text" id="camiones"></td>
+                    <td><input type="text" id="carga"></td>
+                </tr>
+                {% endfor %}
+
+            </table>
+            <button type="submit">Enviar</button>
+        </form>
+        </div>
+   
+
+    {%else%}
+    <h1>ERROR</h1>
+
+    {%endif%}
+    </div>
+    
+{%endblock%}
