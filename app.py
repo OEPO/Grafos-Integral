@@ -20,6 +20,10 @@ def upload():
         #Grafica
         fn.aux_graficar()
 
+        grafoTotalVentas = fn.grafo_pto_ventas()
+
+
+
         return render_template("upload2.html", grafico = True, dict = distancias) #grafico indica a upload que existe una imagen.
     else:
         return render_template("upload.html")

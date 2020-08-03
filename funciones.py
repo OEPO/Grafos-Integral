@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from scipy.spatial import distance
 import pandas as pd
 import numpy as np
+import networkx as nwx
 
 import os
 
@@ -101,9 +102,44 @@ def aux_graficar():
     plt.savefig("static/img/graph")
 
 
+def grafo_pto_ventas() :
 
+    G = nwx.Graph()
 
+    ventas = open("static/data/ventas.txt","r")
 
+    dictPtos = {}
+    
+    for linea_venta in ventas :
+            
+        linea_venta = linea_venta.replace(";",",").replace("\n","").split(",")
+            
+        pto = ( int(linea_venta[2]), int(linea_venta[3]) )
+            
+        dictPtos.update( { int(linea_venta[1]) : pto } )
+        
+    ventas.close()
+
+    aristas = []
+    
+    for k in list(dictPtos.keys()) : 
+
+        G.add_node(int(k))
+    
+    for k1,v1 in dictPtos.items() :
+
+        for k2,v2 in dictPtos.items() :
+
+            if k1 != k2 :
+
+                distAux = round(distance.euclidean(v1,v2),5)
+                
+                aristas.append((k1, k2, distAux))
+
+                
+    G.add_weighted_edges_from(aristas)
+
+    return G
 
 
 
