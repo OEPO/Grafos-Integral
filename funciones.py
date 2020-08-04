@@ -122,7 +122,7 @@ def grafo_pto_ventas() :
 
     aristas = []
     
-    for k in list(dictPtos.keys()) : 
+    for k in list(dictPtos.keys()) :
 
         G.add_node(int(k))
     
@@ -135,15 +135,47 @@ def grafo_pto_ventas() :
                 distAux = round(distance.euclidean(v1,v2),5)
                 
                 aristas.append((k1, k2, distAux))
-
-                
+           
     G.add_weighted_edges_from(aristas)
 
     return G
 
+def validar_entrega(puntosVenta, cantidades) :
 
+    listaPtos = []
 
+    listaCantidades = []
 
+    puntosVenta.replace(" ","")
+    cantidades.replace(" ","")
 
+    listaPtos = puntosVenta.split(",")
+    listaCantidades =  cantidades.split(",")
+
+    if len(listaPtos) == len(listaCantidades) :
+        
+        for i in listaPtos : 
+
+            if i.isdigit() == False :
+
+                return False
     
+        for j in listaCantidades :
+
+            if j.isdigit() == False :
+
+                return False
+    
+            else : 
+
+                if int(j) > 1000 : 
+
+                    return False
+    
+    else : 
+        
+        return False
+
+    return True
+
 

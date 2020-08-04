@@ -3,9 +3,12 @@
 {%block content%}
 
 <div id="upload">
-    <form id="upload-form" action="{{url_for('upload') }}" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" accept=".txt">
-    <button type="submit" value="send">send</button></form>
+    <form id="upload-form" action="{{url_for('upload') }}" method="POST" enctype="multipart/form-data">
+        <input type="file" class="custom-file-input" id = "file" name="file" value="Subir Archivo de Texto">
+    
+        <button class = "btn btn-primary" type="submit" name = 'upload' value = "Subir Archivo de Texto">Subir Archivo de Texto</button>
+    </form>
 </div>
+
 
 {%endblock%}
