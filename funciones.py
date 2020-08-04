@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from scipy.spatial import distance
 import pandas as pd
 import numpy as np
-import networkx as nwx
+import math
 
 import os
 
@@ -102,44 +102,6 @@ def aux_graficar():
     plt.savefig("static/img/graph")
 
 
-def grafo_pto_ventas() :
-
-    G = nwx.Graph()
-
-    ventas = open("static/data/ventas.txt","r")
-
-    dictPtos = {}
-    
-    for linea_venta in ventas :
-            
-        linea_venta = linea_venta.replace(";",",").replace("\n","").split(",")
-            
-        pto = ( int(linea_venta[2]), int(linea_venta[3]) )
-            
-        dictPtos.update( { int(linea_venta[1]) : pto } )
-        
-    ventas.close()
-
-    aristas = []
-    
-    for k in list(dictPtos.keys()) :
-
-        G.add_node(int(k))
-    
-    for k1,v1 in dictPtos.items() :
-
-        for k2,v2 in dictPtos.items() :
-
-            if k1 != k2 :
-
-                distAux = round(distance.euclidean(v1,v2),5)
-                
-                aristas.append((k1, k2, distAux))
-           
-    G.add_weighted_edges_from(aristas)
-
-    return G
-
 def validar_entrega(puntosVenta, cantidades) :
 
     listaPtos = []
@@ -177,5 +139,78 @@ def validar_entrega(puntosVenta, cantidades) :
         return False
 
     return True
+
+
+    ############
+
+def ruta_camion(centro,puntos,productos):
+    productos = productos.split(",")
+    # print(productos)
+    puntos = puntos.split(",")
+    puntos_aux = puntos.copy()
+
+    cantidad_camiones = 0
+    for i in productos:
+        cantidad_camiones += int(i)
+    cantidad_camiones = math.ceil(cantidad_camiones/1000)
+
+    camiones = {}
+
+    #camiones coor + producto
+    for x in range(cantidad_camiones):
+        a = {x:{"coord":centro,
+        "producto":1000,
+        "ruta":[]}}
+        camiones.update(a)
+
+
+    while len(puntos_aux) !=0:
+        for a in camiones: #{0: {'coord': '66', 'producto': 1000, 'ruta': []}
+            # print(puntos_aux)
+            p = short(camiones[a]["coord"],puntos_aux)
+            if p == "":
+                break
+            else:
+                # print(puntos.index(p),p)
+                if camiones[a]["producto"] >= int(productos[puntos.index(p)]):
+                    # print(camiones[a]["producto"],int(productos[puntos.index(p)]))
+                    camiones[a]["producto"] = camiones[a]["producto"] - int(productos[puntos.index(p)])
+                    puntos_aux.remove(p)
+                    camiones[a]["coord"] = p
+                    camiones[a]["ruta"].append(p)
+                # print("----")
+
+        return camiones
+        
+
+
+def short(punto_uno,puntos): #"ID",Lista de puntos
+    short = 1000000000000000
+    punto = ""
+    for p in puntos:
+        #print(p,distancia(punto_uno,p))
+        if distancia(punto_uno,p) < short:
+            short = distancia(punto_uno,p)
+            punto = p
+    return punto
+
+
+
+def coor(id):
+    f = open("static/data/file.txt","r")
+    for x in f:
+        x = x.split(";")
+        if id == x[1]:
+            A = x[2].replace("\n","").split(",")
+            for i in range(0, len(A)):
+                A[i] = int(A[i])
+            return A
+    f.close()
+
+
+def distancia(punto_uno,punto_dos):
+    A = coor(punto_uno)
+    B = coor(punto_dos)
+    return round(distance.euclidean(A,B),5)
 
 

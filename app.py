@@ -40,11 +40,11 @@ def upload():
         
         if request.form.get("submit", True) == "programar" :
             
-            for i in range(len(distancias)) :
+            for x,y in distancias.items():
                     
-                if fn.validar_entrega(request.form["ventas"+str(i+1)], request.form["cantidad"+str(i+1)]) == True : # añadir validaciones
+                if fn.validar_entrega(request.form["ventas"+x], request.form["cantidad"+x]) == True : # añadir validaciones
 
-                    print("VALIDACION PASADA")
+                    fn.ruta_camion(x,request.form["ventas"+x],request.form["cantidad"+x])
 
                 else : 
 
