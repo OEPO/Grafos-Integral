@@ -1,0 +1,3 @@
+Centro numero:3
+Camion: 1
+Rutas['60']

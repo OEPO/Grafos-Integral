@@ -1,0 +1,5 @@
+Centro numero:2
+Camion: 1
+Rutas['50']
+Camion: 2
+Rutas['40']

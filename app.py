@@ -6,6 +6,7 @@ app = Flask(__name__)
 
 @app.route("/",methods=["GET","POST"])
 def upload():
+    rutas = False
     
     global distancias 
     
@@ -45,20 +46,16 @@ def upload():
                 if fn.validar_entrega(request.form["ventas"+x], request.form["cantidad"+x]) == True : # añadir validaciones
 
                     fn.ruta_camion(x,request.form["ventas"+x],request.form["cantidad"+x])
+                    rutas = True
 
                 else : 
 
                     print("VALIDACION RECHAZADA")
 
-    return render_template("upload.html")
+    return render_template("upload.html", rutas = rutas)
 
 
-@app.route("/upload2",methods=["GET","POST"])
-def resultados():
-    
-    if request.method == 'POST':
-        
-        return "<h1> XD </h1>"
+
 
 
 if __name__ == '__main__':

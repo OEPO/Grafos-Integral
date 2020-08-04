@@ -1,0 +1,3 @@
+Centro numero:1
+Camion: 1
+Rutas['20', '30', '10']

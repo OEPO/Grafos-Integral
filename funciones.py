@@ -180,7 +180,13 @@ def ruta_camion(centro,puntos,productos):
                     camiones[a]["ruta"].append(p)
                 # print("----")
 
-        return camiones
+    f = open("static/data/"+centro+".txt","w")
+    texto = ""
+    texto = ("Centro numero:" + centro + "\n")
+    f.write(str(texto))
+    for x,y in camiones.items():
+        f.write("Camion: " + str(x+1) + "\n" + "Rutas" + str(camiones[x]["ruta"])+"\n")
+    f.close()
         
 
 

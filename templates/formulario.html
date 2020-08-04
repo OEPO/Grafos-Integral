@@ -9,10 +9,32 @@
 
 <div id="uploaded">
 
+ 
+
     {%if grafico %}
     
         <div>
             <img src= "/static/img/graph.png" alt="graph">
+            <div>
+                <form action="" method="POST">
+                    <table>
+                        <tr>
+                            <th> Centro Distribución </th>
+                            <th> Puntos de Venta a distribuir </th>
+                            <th> Cantidad a distribuir </th>
+                        </tr>
+                        {% for x,y in dict.items() %}
+                        <tr>
+                            <td>{{ x }}</td>
+                            <td><input type="text" id="ventas{{ x }}" name="ventas{{ x }}"></td>
+                            <td><input type="text" id="cantidad{{ x }}" name="cantidad{{ x }}"></td>
+                        </tr>
+                        {% endfor %}
+        
+                    </table>
+                    <button type="submit" name="submit" value="programar">Programar Entregas</button>
+                </form>
+                </div>
             <table>
                 <tr>
                     <th> Centro Distribucion </th>
@@ -32,26 +54,7 @@
             </table>
         </div>
 
-        <div>
-        <form action="" method="POST">
-            <table>
-                <tr>
-                    <th> Centro Distribución </th>
-                    <th> Puntos de Venta a distribuir </th>
-                    <th> Cantidad a distribuir </th>
-                </tr>
-                {% for x,y in dict.items() %}
-                <tr>
-                    <td>{{ x }}</td>
-                    <td><input type="text" id="ventas{{ x }}" name="ventas{{ x }}"></td>
-                    <td><input type="text" id="cantidad{{ x }}" name="cantidad{{ x }}"></td>
-                </tr>
-                {% endfor %}
-
-            </table>
-            <button type="submit" name="submit" value="programar">Programar Entregas</button>
-        </form>
-        </div>
+        
    
 
     {%else%}
